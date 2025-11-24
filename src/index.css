@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* A4 Sheet Standard */
+.a4-sheet {
+  width: 210mm;
+  height: 297mm;
+  background: white;
+  padding: 10mm;
+  margin: 0 auto;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  position: relative;
+  transform-origin: top center;
+}
+
+.labels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 5mm;
+  height: 100%;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: visible !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Reset layout for print */
+  .flex-col,
+  .lg\:flex-row {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #sidebar-controls {
+    display: none !important;
+  }
+
+  #preview-area {
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+    display: block !important;
+  }
+
+  #preview-scroll-container {
+    padding: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  #pagesContainer {
+    transform: none !important;
+    display: block !important;
+  }
+
+  /* A4 sheet styling for print */
+  .a4-sheet {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    page-break-after: always;
+    break-after: page;
+    display: block !important;
+  }
+
+  .a4-sheet:last-child {
+    page-break-after: auto !important;
+    break-after: auto !important;
+  }
+
+  .labels-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: repeat(6, 1fr) !important;
+    gap: 5mm !important;
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
+
+/* Mobile Preview Adjustments */
+@media (max-width: 640px) {
+  .preview-scroll-container {
+    transform: scale(0.6);
+    transform-origin: top center;
+    height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 20px;
+  }
+
+  .a4-sheet {
+    margin-bottom: 10px;
+    box-shadow: none;
+    border: 1px solid #eee;
+  }
+
+  #pagesContainer {
+    display: block;
+  }
+}
