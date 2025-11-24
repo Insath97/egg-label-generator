@@ -1,7 +1,14 @@
 import React from 'react';
 import { Input, Checkbox, Button } from '../UI';
 
-export const ControlPanel = ({ formData, updateFormData, pageCountInfo }) => {
+export const ControlPanel = ({ 
+  formData, 
+  updateFormData, 
+  pageCountInfo, 
+  onExportPDF,
+  isGeneratingPDF = false,
+  pdfProgress = 0 
+}) => {
   const handleInputChange = (field) => (e) => {
     updateFormData(field, e.target.value);
   };
@@ -43,7 +50,7 @@ export const ControlPanel = ({ formData, updateFormData, pageCountInfo }) => {
               label="Price"
               value={formData.itemPrice}
               onChange={handleInputChange('itemPrice')}
-              placeholder="e.g. LKR 25.00"
+              placeholder="e.g. $5.00"
               className="font-bold text-green-700"
             />
           </div>
@@ -96,16 +103,32 @@ export const ControlPanel = ({ formData, updateFormData, pageCountInfo }) => {
           />
         </div>
 
-        <Button onClick={() => window.print()}>
+        {/* Simple PDF Export Button */}
+        <Button 
+          onClick={onExportPDF}
+          loading={isGeneratingPDF}
+          progress={pdfProgress}
+        >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" 
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          Print / Save as PDF
+          Save as PDF
         </Button>
         
         <p className="text-center text-xs text-slate-400 mt-3">
           {pageCountInfo}
         </p>
+
+        {/* Quality Info */}
+        <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+          <div className="flex items-center gap-2 text-green-700">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span className="text-xs font-medium">Ultra High Quality PDF (Print Ready)</span>
+          </div>
+        </div>
       </div>
     </div>
   );

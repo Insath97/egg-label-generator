@@ -1,7 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
+/* Force font loading and application */
+* {
+  font-family: 'Inter', sans-serif !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+}
+
 body {
   font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* A4 Sheet Standard */
@@ -15,6 +25,28 @@ body {
   overflow: hidden;
   position: relative;
   transform-origin: top center;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Force company name styling in all contexts */
+.company-name,
+[class*="company"],
+[id*="company"],
+[data-company],
+.company-text {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+  letter-spacing: 0.5px !important;
+}
+
+/* Ensure all text elements use Inter font */
+.a4-sheet * {
+  font-family: 'Inter', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .labels-grid {
@@ -23,12 +55,39 @@ body {
   grid-template-rows: repeat(6, 1fr);
   gap: 5mm;
   height: 100%;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Individual label styling */
+.egg-label {
+  font-family: 'Inter', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.egg-label * {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Specific company name targeting */
+.egg-label .company-name {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 18px !important;
+  letter-spacing: 0.8px !important;
 }
 
 @media print {
   @page {
     size: A4;
     margin: 0;
+  }
+
+  /* Force font in print/PDF */
+  * {
+    font-family: 'Inter', sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
   }
 
   body {
@@ -40,6 +99,7 @@ body {
     width: 100% !important;
     height: 100% !important;
     overflow: visible !important;
+    font-family: 'Inter', sans-serif !important;
   }
 
   .no-print {
@@ -52,6 +112,7 @@ body {
     display: block !important;
     height: auto !important;
     overflow: visible !important;
+    font-family: 'Inter', sans-serif !important;
   }
 
   #sidebar-controls {
@@ -63,17 +124,20 @@ body {
     overflow: visible !important;
     background: white !important;
     display: block !important;
+    font-family: 'Inter', sans-serif !important;
   }
 
   #preview-scroll-container {
     padding: 0 !important;
     overflow: visible !important;
     display: block !important;
+    font-family: 'Inter', sans-serif !important;
   }
 
   #pagesContainer {
     transform: none !important;
     display: block !important;
+    font-family: 'Inter', sans-serif !important;
   }
 
   /* A4 sheet styling for print */
@@ -88,6 +152,13 @@ body {
     page-break-after: always;
     break-after: page;
     display: block !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  .a4-sheet * {
+    font-family: 'Inter', sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
   }
 
   .a4-sheet:last-child {
@@ -102,6 +173,18 @@ body {
     gap: 5mm !important;
     height: 100% !important;
     width: 100% !important;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  /* Company name specific print styles */
+  .company-name,
+  [class*="company"],
+  [id*="company"] {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 800 !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    text-rendering: optimizeLegibility !important;
   }
 }
 
@@ -114,15 +197,96 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     padding-bottom: 20px;
+    font-family: 'Inter', sans-serif !important;
   }
 
   .a4-sheet {
     margin-bottom: 10px;
     box-shadow: none;
     border: 1px solid #eee;
+    font-family: 'Inter', sans-serif !important;
   }
 
   #pagesContainer {
     display: block;
+    font-family: 'Inter', sans-serif !important;
   }
+}
+
+/* Enhanced Spinner Animations */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Backdrop blur for modern browsers */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+/* Gradient backgrounds */
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+}
+
+.from-farm-500 {
+  --tw-gradient-from: #a1887f;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(161, 136, 127, 0));
+}
+
+.to-farm-600 {
+  --tw-gradient-to: #8d6e63;
+}
+
+/* Shadow effects */
+.shadow-inner {
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Button hover effects */
+.hover\:shadow-lg:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Disabled states */
+.disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}
+
+.disabled\:cursor-not-allowed:disabled {
+  cursor: not-allowed;
+}
+
+/* PDF-specific font fixes */
+@media all {
+  .pdf-export * {
+    font-family: 'Inter', sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+}
+
+/* Fallback font stack for maximum compatibility */
+.a4-sheet {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+}
+
+.a4-sheet * {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
