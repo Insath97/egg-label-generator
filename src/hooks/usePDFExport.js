@@ -20,27 +20,62 @@ export const usePDFExport = () => {
         return;
       }
 
-      // Create a new PDF instance
-      const pdf = new jsPDF("p", "mm", "a4");
+      // Create a new PDF instance with high quality settings
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+        compress: false // Disable compression for better quality
+      });
 
-      for (let i = 0; i < sheets.length; i++) {
+      const totalSheets = sheets.length;
+      
+      for (let i = 0; i < totalSheets; i++) {
         // Update progress
-        const currentProgress = Math.round(((i + 1) / sheets.length) * 100);
+        const currentProgress = Math.round(((i + 1) / totalSheets) * 100);
         setProgress(currentProgress);
 
         const sheet = sheets[i];
 
-        // Convert the sheet to canvas
+        // Detect device and set appropriate scale
+        const isMobile = window.innerWidth < 768;
+        const scale = isMobile ? 4 : 3; // Higher scale for mobile
+
+        // Store original transform for restoration
+        const originalTransform = sheet.style.transform;
+        sheet.style.transform = 'scale(1)'; // Reset any zoom
+
+        // High quality canvas rendering with device-optimized settings
         const canvas = await html2canvas(sheet, {
-          scale: 2, // Higher quality
+          scale: scale, // Dynamic scale based on device
           useCORS: true,
           allowTaint: true,
           backgroundColor: "#ffffff",
+          logging: false,
+          removeContainer: true,
+          width: sheet.scrollWidth,
+          height: sheet.scrollHeight,
+          onclone: (clonedDoc) => {
+            // Force high-quality rendering
+            const style = document.createElement('style');
+            style.textContent = `
+              * {
+                image-rendering: -webkit-optimize-contrast !important;
+                image-rendering: crisp-edges !important;
+                shape-rendering: crispEdges !important;
+              }
+            `;
+            clonedDoc.head.appendChild(style);
+          }
         });
 
-        const imgData = canvas.toDataURL("image/png");
+        // Restore original transform
+        sheet.style.transform = originalTransform;
 
-        // Calculate dimensions to fit A4
+        // Use PNG with maximum quality
+        const imgData = canvas.toDataURL("image/png", 1.0);
+
+        // Calculate dimensions to fit A4 perfectly
         const imgWidth = 210; // A4 width in mm
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
@@ -49,15 +84,22 @@ export const usePDFExport = () => {
           pdf.addPage();
         }
 
-        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        pdf.addImage(
+          imgData, 
+          "PNG", 
+          0, 
+          0, 
+          imgWidth, 
+          imgHeight,
+          undefined,
+          'FAST' // Better for high-res images
+        );
 
         // Small delay to show progress
-        await new Promise((resolve) => setTimeout(resolve, 300));
+        await new Promise((resolve) => setTimeout(resolve, 200));
       }
 
       setProgress(100);
-
-      // Brief delay to show completion
       await new Promise((resolve) => setTimeout(resolve, 300));
 
       // Generate filename with timestamp
