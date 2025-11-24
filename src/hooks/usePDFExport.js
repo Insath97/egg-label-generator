@@ -32,7 +32,7 @@ export const usePDFExport = () => {
 
         // Convert the sheet to canvas
         const canvas = await html2canvas(sheet, {
-          scale: 3, // Higher quality
+          scale: 2, // Higher quality
           useCORS: true,
           allowTaint: true,
           backgroundColor: "#ffffff",
