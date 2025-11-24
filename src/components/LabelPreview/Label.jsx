@@ -22,7 +22,7 @@ export const Label = ({
       
       <div className="bg-white border-2 border-farm-100 rounded-xl p-3 h-full flex flex-col shadow-sm relative overflow-hidden">
         <div className="bg-cream -mx-3 -mt-3 mb-2 py-1.5 px-3 text-center border-b border-farm-200">
-          <h3 className="text-farm-800 font-extrabold text-[10px] uppercase tracking-widest truncate">
+          <h3 className="text-farm-800 font-extrabold text-[10px] uppercase tracking-widest">
             {company}
           </h3>
         </div>
